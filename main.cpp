@@ -14,10 +14,11 @@ using namespace std;
 void randomNumbers();
 void ParitySort();
 void imprimir();
+void swuap(int *, int *);
 /*********Variables Globales********/
 // Este length es el tamaño del arreglo me dio hueva hacer una estructura
 int length = 10;
-//Declaramos arreglo dinamico
+// Declaramos arreglo dinamico
 int *numeros = new int[0];
 /*************Funcion Main**********/
 int main(int argc, char const *argv[])
@@ -44,34 +45,63 @@ void randomNumbers()
     for (int i = 0; i < length; i++)
     {
         *&numeros[i] = rand() % 10;
-        cout << *&numeros[i] << ",";
+        cout << *&numeros[i] << (i >= (length - 1) ? "" : ",");
     }
     cout << endl;
 }
 void ParitySort()
 {
-    int aux = 0;
     for (int i = 0; i < length; i++)
     {
         for (int j = 0; j < length - 1; j++)
         {
-            int num1 = *&numeros[j];
-            int num2 = *&numeros[j + 1];
-            if ((num1 & 1) == 1) // Este modo de condicional usa binarios, este dice "num1 and 1" si esto se cumple devolvera un uno por lo cual se puede decir que es impar, pudes usar tambien el "num % 2 == 0" este dara el residuo, y si el residuo es 0 significa que es para
+            if ((*&numeros[j] & 1) == 1 && (*&numeros[j + 1] & 1) == 0)
             {
-                aux = num1;
-                *&numeros[j] = num2;
-                *&numeros[j + 1] = aux;
+                swap(*&numeros[j + 1], *&numeros[j]);
+            }
+            else if ((*&numeros[j] & 1) == 0 && (*&numeros[j + 1] & 1) == 0)
+            {
+                if (*&numeros[j] > *&numeros[j + 1])
+                    swap(*&numeros[j + 1], *&numeros[j]);
+            }
+            else if ((*&numeros[j] & 1) == 1 && (*&numeros[j + 1] & 1) == 1)
+            {
+                if (*&numeros[j] > *&numeros[j + 1])
+                    swap(*&numeros[j + 1], *&numeros[j]);
             }
         }
     }
+    // int aux = 0;
+    // for (int i = 0; i < length; i++)
+    // {
+    //     for (int j = 0; j < length - 1; j++)
+    //     {
+    //         int num1 = *&numeros[j];
+    //         int num2 = *&numeros[j + 1];
+    //         if ((num1 & 1) == 1) // Este modo de condicional usa binarios, este dice "num1 and 1" si esto se cumple devolvera un uno por lo cual se puede decir que es impar, pudes usar tambien el "num % 2 == 0" este dara el residuo, y si el residuo es 0 significa que es para
+    //         {
+    //             aux = num1;
+    //             *&numeros[j] = num2;
+    //             *&numeros[j + 1] = aux;
+    //         }
+    //         else{
+
+    //         }
+    //     }
+    // }
 }
 void imprimir()
 {
     cout << "Arreglo ordenado: ";
     for (int i = 0; i < length; i++)
     {
-        cout << *&numeros[i] << (i >= (length-1)?"":",");
+        cout << *&numeros[i] << (i >= (length - 1) ? "" : ",");
     }
     cout << endl;
+}
+void swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
 }
