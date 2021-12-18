@@ -17,7 +17,7 @@ void imprimir();
 void swuap(int *, int *);
 /*********Variables Globales********/
 // Este length es el tamaño del arreglo me dio hueva hacer una estructura
-int length = 10;
+int length = 0;
 // Declaramos arreglo dinamico
 int *numeros = new int[0];
 /*************Funcion Main**********/
@@ -27,6 +27,7 @@ int main(int argc, char const *argv[])
     /*****************************/
     /****asi se llama a una FUNCION SIN PARAMETROS****/
     randomNumbers();
+    imprimir();
     ParitySort();
     imprimir();
     /*********El metodo o funcion clock de la libreria ctime (en c++), o time.h (en c), da el tiempo desde que inicia el programa.***/
@@ -39,15 +40,13 @@ int main(int argc, char const *argv[])
 void randomNumbers()
 {
     // Rand es un metodo de cstdlib (en c++), y stdlib.h (en c), se divide entre 100 para que de un numero entre 0 y 100, y se le suma para que de entre 1 y 100.
-    // length = rand() % 1000 + 1;
+    length = rand() % 1000 + 1;
     *&numeros = new int[length];
     cout << "Arreglo desordenado: ";
     for (int i = 0; i < length; i++)
     {
-        *&numeros[i] = rand() % 10;
-        cout << *&numeros[i] << (i >= (length - 1) ? "" : ",");
+        *&numeros[i] = rand() % 100;
     }
-    cout << endl;
 }
 void ParitySort()
 {
@@ -55,19 +54,19 @@ void ParitySort()
     {
         for (int j = 0; j < length - 1; j++)
         {
-            if ((*&numeros[j] & 1) == 1 && (*&numeros[j + 1] & 1) == 0)
+            if ((*&numeros[j] & 1) == 1 && (*&numeros[j + 1] & 1) == 0) // Este modo de condicional usa binarios, este dice "num1 and 1" si esto se cumple devolvera un uno por lo cual se puede decir que es impar, pudes usar tambien el "num % 2 == 0" este dara el residuo, y si el residuo es 0 significa que es para
             {
-                swap(*&numeros[j + 1], *&numeros[j]);
+                swap(*&numeros[j + 1], *&numeros[j]); // El swuap con el uso de punteros cambia los numeros
             }
-            else if ((*&numeros[j] & 1) == 0 && (*&numeros[j + 1] & 1) == 0)
+            else if ((*&numeros[j] & 1) == 0 && (*&numeros[j + 1] & 1) == 0) // Este modo de condicional usa binarios, este dice "num1 and 1" si esto se cumple devolvera un uno por lo cual se puede decir que es impar, pudes usar tambien el "num % 2 == 0" este dara el residuo, y si el residuo es 0 significa que es para
             {
                 if (*&numeros[j] > *&numeros[j + 1])
-                    swap(*&numeros[j + 1], *&numeros[j]);
+                    swap(*&numeros[j + 1], *&numeros[j]); // El swuap con el uso de punteros cambia los numeros
             }
-            else if ((*&numeros[j] & 1) == 1 && (*&numeros[j + 1] & 1) == 1)
+            else if ((*&numeros[j] & 1) == 1 && (*&numeros[j + 1] & 1) == 1) // Este modo de condicional usa binarios, este dice "num1 and 1" si esto se cumple devolvera un uno por lo cual se puede decir que es impar, pudes usar tambien el "num % 2 == 0" este dara el residuo, y si el residuo es 0 significa que es para
             {
                 if (*&numeros[j] > *&numeros[j + 1])
-                    swap(*&numeros[j + 1], *&numeros[j]);
+                    swap(*&numeros[j + 1], *&numeros[j]); // El swuap con el uso de punteros cambia los numeros
             }
         }
     }
